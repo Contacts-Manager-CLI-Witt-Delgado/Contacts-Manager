@@ -61,11 +61,13 @@ public class ContactsApp {
                 printString(path);
 
             } else if (input == 2) {
-                System.out.println("Add name of new contact");
+                System.out.println("First name");
                 String input2 = in.next();
-                System.out.println("Add number of new contact");
+                System.out.println("Last name");
                 String input21 = in.next();
-                String str = String.format("%s | %s", input2, input21);
+                System.out.println("Add number of new contact");
+                String input22 = in.next();
+                String str = String.format("%s %s | %s", input2, input21, input22);
                 contacts.add(str);
                 Files.write(path, contacts);
                 for (String contact : contacts) {
@@ -83,19 +85,23 @@ public class ContactsApp {
                     }
                 }
             } else if (input == 4){
+                List<String> contacts1 = Files.readAllLines(path);
                 System.out.println("Please enter full name and number of contact you wish to delete.");
-                String input4 = in.next();
-                for (String contact : contacts) {
-                    if (contact.contains(input4)) {
-                        contacts.remove(input4);
+                String input4 = in.nextLine();
+                for (String contact : contacts1) {
+                    System.out.println(input4);
+                    if (contact.equals(input4)) {
+                        contacts1.remove(input4);
                         System.out.println(contact + " has been erased from the Jedi Archives");
-                        Files.write(path, contacts);
+                        Files.write(path, contacts1);
                         printString(path);
+                        System.out.println(contact);
                     }
                 }
             }else {
                 System.out.println("Bye");
             }
+//            Files.write(path, contacts);
         } while (input > 0 && input < 5);
     }
 }
