@@ -29,45 +29,61 @@ public class ContactsApp {
 
     public static void main(String[] args) throws
             IOException {
-        System.out.println("1. View contacts\n2. Add a new contact\n3. Search a contact by name\n4. Delete existing contact\n5. Exit");
+        int input;
+        System.out.println("----------(   |   )---------");
+        System.out.println("----------(   |   )---------");
+        System.out.println("----------(   |   )---------");
+        System.out.println("-----------(  *  )----------");
+        System.out.println("------------( | )-----------");
+        System.out.println("Welcome to the Jedi Archives");
+        do {
+            System.out.println("-------------------------------");
+            System.out.println("1. View contacts\n2. Add a new contact\n3. Search a contact by name\n4. Delete existing contact\n5. Exit");
+            System.out.println("-------------------------------");
+            List<String> contacts = new ArrayList<>();
+            contacts.add("Anakin Skywalker | 123-234-4566");
+            contacts.add("Obi Wan Kenobi | 123-234-4566");
+            contacts.add("Boba Fett | 123-234-4566");
+            contacts.add("Mace Windu | 123-234-4566");
+            contacts.add("Padme | 123-234-4566");
 
-        List<String> contacts = new ArrayList<>();
-        contacts.add("Anakin Skywalker | 123-234-4566");
-        contacts.add("Obi Wan Kenobi | 123-234-4566");
-        contacts.add("Boba Fett | 123-234-4566");
-        contacts.add("Mace Windu | 123-234-4566");
-        contacts.add("Padme | 123-234-4566");
+            Path path = Paths.get("./src/Contacts/contacts.txt");
+            Files.write(path, contacts);
+            Scanner in = new Scanner(System.in);
+            input = in.nextInt();
 
-        Path path = Paths.get("./src/Contacts/contacts.txt");
-        Files.write(path, contacts);
-        Scanner in = new Scanner(System.in);
-        String input = in.nextLine();
-//        while (true) {
-            if (input.equals("1")) {
+            if (input == 1) {
                 printString(path);
-            } else if (input.equals("2")) {
+            } else if (input == 2) {
                 System.out.println("Add new contact");
-                String input2 = in.nextLine();
+                String input2 = in.next();
                 contacts.add(input2);
                 Files.write(path, contacts);
                 System.out.println(contacts);
-            } else if (input.equals("3")) {
-                for (String contact : contacts){
-                    String input3 = in.nextLine();
-                    if(contact.contains(input3)){
+
+            } else if (input == 3) {
+                System.out.println("Please enter name.");
+                String input3 = in.next();
+                for (String contact : contacts) {
+                    if (contact.contains(input3)) {
                         System.out.println(contact);
-                    }else {
-                        System.out.println("Sorry contact not found");
+//                    } else {
+////                        System.out.println("Sorry contact not found");
                     }
                 }
-            } else if(input.equals("4")){
 
-//            } else  (input.equals("5")) {
-//                break;
+//            } else {
+//                System.out.println("Please enter full name and number of contact you wish to delete.");
+//                String input4 = in.nextLine();
+//                for (String contact : contacts) {
+//                    if (contact.contains(input4)) {
+//                        contacts.remove(input4);
+//                        Files.write(path, contacts);
+//                        System.out.println(contacts);
+//                    }
+//                }
             }
-            System.out.println("bye");
-
-        }
-
+        } while (input > 0 && input < 5);
     }
-//}
+}
+
