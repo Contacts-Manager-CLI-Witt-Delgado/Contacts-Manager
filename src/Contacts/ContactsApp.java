@@ -48,9 +48,11 @@ public class ContactsApp {
         Files.write(path, contacts);
 
         do {
+            System.out.println(" ");
             System.out.println("-------------------------------");
             System.out.println("1. View contacts\n2. Add a new contact\n3. Search a contact by name\n4. Delete existing contact\n5. Exit");
             System.out.println("-------------------------------");
+            System.out.println(" ");
 
             Scanner in = new Scanner(System.in);
             input = in.nextInt();
@@ -59,13 +61,16 @@ public class ContactsApp {
                 printString(path);
 
             } else if (input == 2) {
-                System.out.println("Add new contact");
+                System.out.println("Add name of new contact");
                 String input2 = in.next();
-                contacts.add(input2);
+                System.out.println("Add number of new contact");
+                String input21 = in.next();
+                String str = String.format("%s | %s", input2, input21);
+                contacts.add(str);
                 Files.write(path, contacts);
                 for (String contact : contacts) {
                     if (contact.contains(input2)) {
-                        System.out.println("You added " + contact + " to Jedi Archives");
+                        System.out.println("You added " + contact + " to the Jedi Archives");
                     }
                 }
 
@@ -83,6 +88,7 @@ public class ContactsApp {
                 for (String contact : contacts) {
                     if (contact.contains(input4)) {
                         contacts.remove(input4);
+                        System.out.println(contact + " has been erased from the Jedi Archives");
                         Files.write(path, contacts);
                         printString(path);
                     }
