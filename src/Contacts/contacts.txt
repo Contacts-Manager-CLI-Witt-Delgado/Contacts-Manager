@@ -1,5 +1,8 @@
-Anakin Skywalker | 123-234-4566
-Obi Wan Kenobi | 123-234-4566
-Boba Fett | 123-234-4566
-Mace Windu | 123-234-4566
-Padme | 123-234-4566
+Leia  | 0980980980980
+Dooku | 0980980980980
+Anakin | 11111111111
+Obi-wan | 222222222222222
+Kamino |
+mace | 3534535345
+luke | 45645645645645
+andres | 45645646
