@@ -17,8 +17,8 @@ import static java.nio.file.Files.lines;
 import static java.nio.file.Files.readAllLines;
 
 public class ContactsApp {
-    List<String> contacts = new ArrayList<>();
-    public static void viewDirectory(Path path) throws IOException {
+    public static void printString(Path path) throws
+            IOException {
         System.out.println();
         List<String> fileContents = Files.readAllLines(path);
         // we need List as .readAllLines returns datatype
@@ -26,27 +26,84 @@ public class ContactsApp {
             System.out.printf("%d: %s\n", i + 1, fileContents.get(i));
         }
     }
+
+
+//--------------------------------------------------------------------------------------
+
+    static List<String> contacts = new ArrayList<>();
+    static List<String> contactList = new ArrayList<>();
+    static Path path = Paths.get("./src/Contacts/contacts.txt");
+
     public static void viewContactList() throws IOException{
-        List<String> contactsList = new ArrayList<>();
         Path path = Paths.get("./src/Contacts/contacts.txt");
-        contactsList.add("\tAnakin Skywalker | 123-234-4566");
-        contactsList.add("\tObi Wan Kenobi | 123-234-4566");
-        contactsList.add("\tBoba Fett | 123-234-4566");
-        contactsList.add("\tMace Windu | 123-234-4566");
-        contactsList.add("\tPadme | 123-234-4566");
-        Files.write(path, contactsList);
-    }
-    public static void addNewContact() {
-        Scanner input = new Scanner(System.in);
-        System.out.println("Add new contact");
-        String name = input.nextLine();
-        System.out.println("Add a number");
-        String number = input.nextLine();
-        contactsList.add(name + " " + number);
+        printString(path);
     }
 
-    public static void main(String[] args) throws
-            IOException {
+
+    public static void addNewContact() throws IOException {
+        List<String> newContact = new ArrayList<>();
+        Scanner in = new Scanner(System.in);
+        System.out.println("name");
+        String input2 = in.nextLine();
+        System.out.println("Add number of new contact");
+        String input22 = in.nextLine();
+        String str = String.format(input2 + " | " + input22);
+        newContact.add(str);
+        System.out.println("You added " + input2 + " to the Jedi Archives");
+        Files.write(path, newContact,StandardOpenOption.APPEND);
+    }
+
+
+    public static void searchContact() throws IOException {
+        System.out.println("Please enter name.");
+        Scanner in = new Scanner(System.in);
+        String input3 = in.next();
+        List<String> contact1 = readAllLines(path);
+        for (String s : contact1) {
+            if (s.contains(input3)) {
+                System.out.println(s);
+            }
+        }
+
+    }
+
+
+
+    public static void deleteContact() throws IOException {
+        Path path = Paths.get("./src/Contacts/contacts.txt");
+        Scanner in = new Scanner(System.in);
+        System.out.println("Please enter full name and number of contact you wish to delete.");
+        String input4 = in.nextLine();
+        List<String> contact1 = readAllLines(path);
+        for (String s : contact1) {
+            if (s.contains(input4)) {
+                contact1.remove(input4);
+                System.out.println( input4 + " has been erased from the Jedi Archives");
+                Files.write(path, contact1);
+                printString(path);
+            }
+        }
+
+
+    }
+
+//---------------------------------------------------------------------------
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    public static void main(String[] args) throws IOException {
         int input;
         System.out.println("----------(   |   )---------");
         System.out.println("----------(   |   )---------");
@@ -55,16 +112,47 @@ public class ContactsApp {
         System.out.println("------------( | )-----------");
         System.out.println("Welcome to the Jedi Archives");
 
-        List<String> contacts = new ArrayList<>();
-        contacts.add("Anakin Skywalker | 123-234-4566");
-        contacts.add("Obi Wan Kenobi | 123-234-4566");
-        contacts.add("Boba Fett | 123-234-4566");
-        contacts.add("Mace Windu | 123-234-4566");
-        contacts.add("Padme | 123-234-4566");
+
+        do {
+            System.out.println(" ");
+            System.out.println("-------------------------------");
+            System.out.println("1. View contacts\n2. Add a new contact\n3. Search a contact by name\n4. Delete existing contact\n5. Exit");
+            System.out.println("-------------------------------");
+            System.out.println(" ");
+            Scanner in = new Scanner(System.in);
+            input = in.nextInt();
+            if (input == 1) {
+                viewContactList();
+            } else if (input == 2) {
+                addNewContact();
+            } else if (input == 3) {
+                searchContact();
+            } else if (input == 4){
+                deleteContact();
+            } else{
+                System.out.println("Bye");
+            }
+        } while (input > 0 && input < 5);
 
 
 
 
+
+
+
+
+
+
+//        List<String> contacts = new ArrayList<>();
+//        contacts.add("Anakin Skywalker | 123-234-4566");
+//        contacts.add("Obi Wan Kenobi | 123-234-4566");
+//        contacts.add("Boba Fett | 123-234-4566");
+//        contacts.add("Mace Windu | 123-234-4566");
+//        contacts.add("Padme | 123-234-4566");
+//
+//        Path path = Paths.get("./src/Contacts/contacts.txt");
+//        Files.write(path, contacts);
+//
 //        do {
 //            System.out.println(" ");
 //            System.out.println("-------------------------------");
@@ -121,6 +209,6 @@ public class ContactsApp {
 //            }
 ////            Files.write(path, contacts);
 //        } while (input > 0 && input < 5);
+//    }
     }
 }
-
