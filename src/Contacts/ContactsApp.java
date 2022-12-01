@@ -47,7 +47,7 @@ public class ContactsApp {
         String input2 = in.nextLine();
         System.out.println("Add number of new contact");
         String input22 = in.nextLine();
-        String str = String.format(input2 + " | " + input22);
+        String str = String.format(input2 + "  | " + input22);
         newContact.add(str);
         System.out.println("You added " + input2 + " to the Jedi Archives");
         Files.write(path, newContact,StandardOpenOption.APPEND);
@@ -75,9 +75,9 @@ public class ContactsApp {
         System.out.println("Please enter full name and number of contact you wish to delete.");
         String input4 = in.nextLine();
         List<String> contact1 = readAllLines(path);
-        for (String s : contact1) {
-            if (s.contains(input4)) {
-                contact1.remove(input4);
+        for (int i = 0; i < contact1.size(); i++) {
+            if (contact1.get(i).contains(input4)) {
+                contact1.remove(contact1.get(i));
                 System.out.println( input4 + " has been erased from the Jedi Archives");
                 Files.write(path, contact1);
                 printString(path);
