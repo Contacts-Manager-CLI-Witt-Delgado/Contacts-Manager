@@ -23,7 +23,7 @@ public class ContactsApp {
         List<String> fileContents = Files.readAllLines(path);
         // we need List as .readAllLines returns datatype
         for (int i = 0; i < fileContents.size(); i++) {
-            System.out.printf("%d: %s\n", i + 1, fileContents.get(i));
+            System.out.printf(" %s\n", fileContents.get(i));
         }
     }
 
@@ -47,7 +47,7 @@ public class ContactsApp {
         String input2 = in.nextLine();
         System.out.println("Add number of new contact");
         String input22 = in.nextLine();
-        String str = String.format(input2 + " | " + input22);
+        String str = String.format("%-8s" + " | " + input22.replaceFirst( "(\\d{3})(\\d{3})(\\d+)" , "($1) $2-$3" ), input2);
         newContact.add(str);
         System.out.println("You added " + input2 + " to the Jedi Archives");
         Files.write(path, newContact,StandardOpenOption.APPEND);
@@ -60,11 +60,10 @@ public class ContactsApp {
         String input3 = in.next();
         List<String> contact1 = readAllLines(path);
         for (String s : contact1) {
-            if (s.contains(input3)) {
+            if (s.toLowerCase().contains(input3.toLowerCase())) {
                 System.out.println(s);
             }
         }
-
     }
 
 
@@ -72,18 +71,21 @@ public class ContactsApp {
     public static void deleteContact() throws IOException {
         Path path = Paths.get("./src/Contacts/contacts.txt");
         Scanner in = new Scanner(System.in);
-        System.out.println("Please enter full name and number of contact you wish to delete.");
+        System.out.println("Please enter name of contact you wish to delete.");
         String input4 = in.nextLine();
         List<String> contact1 = readAllLines(path);
-        for (String s : contact1) {
-            if (s.contains(input4)) {
-                contact1.remove(input4);
+        if(!contact1.contains(input4)) {
+            System.out.println("Contact " + input4 + " does not exist");
+        }
+
+        for (int i = 0; i < contact1.size(); i++) {
+            if (contact1.get(i).toLowerCase().contains(input4.toLowerCase())) {
+                contact1.remove(contact1.get(i));
                 System.out.println( input4 + " has been erased from the Jedi Archives");
                 Files.write(path, contact1);
                 printString(path);
             }
         }
-
 
     }
 
