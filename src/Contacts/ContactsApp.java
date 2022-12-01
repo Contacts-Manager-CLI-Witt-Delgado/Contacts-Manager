@@ -26,35 +26,41 @@ public class ContactsApp {
             System.out.printf(" %s\n", fileContents.get(i));
         }
     }
-
-
 //--------------------------------------------------------------------------------------
-
-    static List<String> contacts = new ArrayList<>();
-    static List<String> contactList = new ArrayList<>();
     static Path path = Paths.get("./src/Contacts/contacts.txt");
-
+//getting the path of contacts
     public static void viewContactList() throws IOException{
         Path path = Paths.get("./src/Contacts/contacts.txt");
         printString(path);
+        //prints the path method
     }
-
-
     public static void addNewContact() throws IOException {
+        //adding the new contact method
+        boolean found = false;
         List<String> newContact = new ArrayList<>();
         Scanner in = new Scanner(System.in);
         System.out.println("name");
         String input2 = in.nextLine();
         System.out.println("Add number of new contact");
         String input22 = in.nextLine();
-        String str = String.format("%-8s" + " | " + input22.replaceFirst( "(\\d{3})(\\d{3})(\\d+)" , "($1) $2-$3" ), input2);
-        newContact.add(str);
-        System.out.println("You added " + input2 + " to the Jedi Archives");
-        Files.write(path, newContact,StandardOpenOption.APPEND);
+        List<String> contact1 = readAllLines(path);
+        for (String s : contact1) {
+            //if exists boolean true
+            if (s.toLowerCase().contains(input2.toLowerCase())) {
+                System.out.println("contact already exits");
+                found = true;
+                break;
+            }
+        }if(!found) {
+            //if not exists add new contact
+            String str = String.format("%-20s" + " | " + "%-18s" + " |", input2, input22.replaceFirst("(\\d{3})(\\d{3})(\\d+)", "($1) $2-$3"));
+            newContact.add(str);
+            System.out.println("You added " + input2 + " to the Jedi Archives");
+            Files.write(path, newContact, StandardOpenOption.APPEND);
+        }
     }
-
-
     public static void searchContact() throws IOException {
+        //search contact method
         System.out.println("Please enter name.");
         Scanner in = new Scanner(System.in);
         String input3 = in.next();
@@ -65,46 +71,24 @@ public class ContactsApp {
             }
         }
     }
-
-
-
     public static void deleteContact() throws IOException {
+        //delete contact method
         Path path = Paths.get("./src/Contacts/contacts.txt");
         Scanner in = new Scanner(System.in);
         System.out.println("Please enter name of contact you wish to delete.");
         String input4 = in.nextLine();
         List<String> contact1 = readAllLines(path);
-        if(!contact1.contains(input4)) {
-            System.out.println("Contact " + input4 + " does not exist");
-        }
-
         for (int i = 0; i < contact1.size(); i++) {
             if (contact1.get(i).toLowerCase().contains(input4.toLowerCase())) {
                 contact1.remove(contact1.get(i));
+                //when it is erased
                 System.out.println( input4 + " has been erased from the Jedi Archives");
                 Files.write(path, contact1);
                 printString(path);
             }
         }
-
     }
-
 //---------------------------------------------------------------------------
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
     public static void main(String[] args) throws IOException {
         int input;
         System.out.println("----------(   |   )---------");
@@ -113,8 +97,6 @@ public class ContactsApp {
         System.out.println("-----------(  *  )----------");
         System.out.println("------------( | )-----------");
         System.out.println("Welcome to the Jedi Archives");
-
-
         do {
             System.out.println(" ");
             System.out.println("-------------------------------");
@@ -122,6 +104,7 @@ public class ContactsApp {
             System.out.println("-------------------------------");
             System.out.println(" ");
             Scanner in = new Scanner(System.in);
+            //if else displaying methods
             input = in.nextInt();
             if (input == 1) {
                 viewContactList();
@@ -135,82 +118,5 @@ public class ContactsApp {
                 System.out.println("Bye");
             }
         } while (input > 0 && input < 5);
-
-
-
-
-
-
-
-
-
-
-//        List<String> contacts = new ArrayList<>();
-//        contacts.add("Anakin Skywalker | 123-234-4566");
-//        contacts.add("Obi Wan Kenobi | 123-234-4566");
-//        contacts.add("Boba Fett | 123-234-4566");
-//        contacts.add("Mace Windu | 123-234-4566");
-//        contacts.add("Padme | 123-234-4566");
-//
-//        Path path = Paths.get("./src/Contacts/contacts.txt");
-//        Files.write(path, contacts);
-//
-//        do {
-//            System.out.println(" ");
-//            System.out.println("-------------------------------");
-//            System.out.println("1. View contacts\n2. Add a new contact\n3. Search a contact by name\n4. Delete existing contact\n5. Exit");
-//            System.out.println("-------------------------------");
-//            System.out.println(" ");
-//
-//            Scanner in = new Scanner(System.in);
-//            input = in.nextInt();
-//
-//            if (input == 1) {
-//                printString(path);
-//
-//            } else if (input == 2) {
-//                System.out.println("First name");
-//                String input2 = in.next();
-//                System.out.println("Last name");
-//                String input21 = in.next();
-//                System.out.println("Add number of new contact");
-//                String input22 = in.next();
-//                String str = String.format("%s %s | %s", input2, input21, input22);
-//                contacts.add(str);
-//                Files.write(path, contacts);
-//                for (String contact : contacts) {
-//                    if (contact.contains(input2)) {
-//                        System.out.println("You added " + contact + " to the Jedi Archives");
-//                    }
-//                }
-//
-//            } else if (input == 3) {
-//                System.out.println("Please enter name.");
-//                String input3 = in.next();
-//                for (String contact : contacts) {
-//                    if (contact.contains(input3)) {
-//                        System.out.println(contact);
-//                    }
-//                }
-//            } else if (input == 4){
-//                List<String> contacts1 = Files.readAllLines(path);
-//                System.out.println("Please enter full name and number of contact you wish to delete.");
-//                String input4 = in.nextLine();
-//                for (String contact : contacts1) {
-//                    System.out.println(input4);
-//                    if (contact.equals(input4)) {
-//                        contacts1.remove(input4);
-//                        System.out.println(contact + " has been erased from the Jedi Archives");
-//                        Files.write(path, contacts1);
-//                        printString(path);
-//                        System.out.println(contact);
-//                    }
-//                }
-//            }else {
-//                System.out.println("Bye");
-//            }
-////            Files.write(path, contacts);
-//        } while (input > 0 && input < 5);
-//    }
     }
 }
